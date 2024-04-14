@@ -1,12 +1,12 @@
 "use server";
-import { asc, eq, not } from "drizzle-orm";
+import { asc, desc, eq, not } from "drizzle-orm";
 import db from "./drizzle";
 import { tasks } from "./schema";
 import { revalidatePath } from "next/cache";
 
 export const getAllTasks = async () => {
 	const data = await db.query.tasks.findMany({
-		orderBy: [asc(tasks.id)],
+		orderBy: [desc(tasks.id)],
 	});
 	return data;
 };
