@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { completeTask } from "@/db/queries";
-import { Check } from "lucide-react";
+import { Check, Undo2 } from "lucide-react";
 import { useTransition } from "react";
 
-const CompleteTask = ({ taskId }: { taskId: number }) => {
+const CompleteTask = ({ taskId, isChecked }: { taskId: number; isChecked: boolean }) => {
 	const [isPending, startTransition] = useTransition();
 
 	const handleComplete = () => {
@@ -15,11 +15,11 @@ const CompleteTask = ({ taskId }: { taskId: number }) => {
 
 	return (
 		<Button
-			variant={"default"}
+			variant={isChecked ? "outline" : "default"}
 			size={"icon"}
 			onClick={handleComplete}
 			disabled={isPending}>
-			<Check />
+			{isChecked ? <Undo2 /> : <Check />}
 		</Button>
 	);
 };
