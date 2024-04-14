@@ -1,8 +1,9 @@
 import { getAllTasks } from "@/db/queries";
 import AddTask from "./blocks/AddTask";
 import ChangeTheme from "./blocks/ChangeTheme";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import DeleteTask from "./blocks/DeleteTask";
+import CompleteTask from "./blocks/CompleteTask";
 
 export default async function Home() {
 	const data = await getAllTasks();
@@ -22,18 +23,22 @@ export default async function Home() {
 						{data.map((task) => (
 							<li
 								key={task.id}
-								className="flex place-content-between border p-4 rounded-xl border-primary">
+								className={cn("flex place-content-between items-center border p-4 rounded-xl border-primary dark:bg-black bg-gray-200", {
+									"bg-opacity-20 dark:bg-opacity-20": task.isChecked,
+								})}>
 								<h3
-									className={cn("font-semibold", {
+									className={cn("font-semibold dark:text-white text-gray-900", {
 										"line-through": task.isChecked,
 									})}>
 									{task.name}
 								</h3>
-								<div>
-									{/* <Button></Button>
-									<Button></Button> */}
+								<div className="flex gap-2">
+									<CompleteTask
+										taskId={task.id}
+										isChecked={task.isChecked}
+									/>
+									<DeleteTask taskId={task.id} />
 								</div>
-								<p>{task.isChecked ? "Task is completed" : "Task is not completed"}</p>
 							</li>
 						))}
 					</ul>
