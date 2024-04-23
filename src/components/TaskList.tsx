@@ -8,10 +8,10 @@ interface TaskProps {
 	isChecked: boolean;
 }
 interface TaskListProps {
-	data: TaskProps[];
+	tasks: TaskProps[];
 }
 
-const TaskList = ({ data }: TaskListProps) => {
+const TaskList = ({ tasks }: TaskListProps) => {
 	const container = {
 		hidden: { opacity: 0 },
 		show: {
@@ -29,7 +29,7 @@ const TaskList = ({ data }: TaskListProps) => {
 			animate="show"
 			className="space-y-4">
 			<AnimatePresence>
-				{data.map((task: TaskProps) => (
+				{tasks.map((task: TaskProps) => (
 					<Task
 						key={task.id}
 						id={task.id}

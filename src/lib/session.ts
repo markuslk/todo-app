@@ -3,6 +3,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import dotenv from "dotenv";
 import { NextRequest } from "next/server";
+import { getUser } from "@/db/queries";
 
 dotenv.config({
 	path: ".env.local",
@@ -42,7 +43,12 @@ export async function createSession(userId: number) {
 export async function getSession() {
 	const session = cookies().get("session")?.value;
 	if (!session) return null;
-	return await decrypt(session);
+
+	const sessionData = await decrypt(session);
+	const userId = sessionData?.userId as number;
+
+	const user = await getUser(userId);
+	return { user, session: sessionData };
 }
 
 export async function updateSession(request: NextRequest) {

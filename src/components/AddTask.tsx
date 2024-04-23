@@ -2,9 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createTask } from "@/db/queries";
-import { ChangeEvent, startTransition, useState, useTransition } from "react";
+import { ChangeEvent, useState, useTransition } from "react";
 
-const AddTask = () => {
+const AddTask = ({ userId }: { userId: number }) => {
 	const [isPending, startTransition] = useTransition();
 	const [value, setValue] = useState<string>("");
 
@@ -14,7 +14,7 @@ const AddTask = () => {
 
 	const handleAdd = () => {
 		startTransition(async () => {
-			await createTask(value);
+			await createTask(value, userId);
 			setValue("");
 		});
 	};
