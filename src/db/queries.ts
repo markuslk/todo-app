@@ -5,12 +5,13 @@ import { InferInsertModel, and, asc, desc, eq, not } from "drizzle-orm";
 import db from "./drizzle";
 import { tasks, users } from "./schema";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
 import { createSession, deleteSession } from "@/lib/session";
 
-export const getAllTasks = async () => {
+export const getAllUsersTasks = async (userId: number) => {
 	const data = await db.query.tasks.findMany({
+		where: eq(tasks.userId, userId),
 		orderBy: [desc(tasks.id)],
 	});
 	return data;
@@ -95,27 +96,38 @@ export async function login(formData: FormData) {
 	} else {
 		const { email, password } = validateFields.data;
 
-		// const passwordMatches = await bcrypt.compare(password, users.password);
-
-		// console.log(email, hashedPassword);
-		// $2b$10$16sl1GNIvr9Oh97zmJxXn.7v9fMVqmDxkxIhRgNap5LCu/Vd90cZa
-		// $2b$10$k5VxDWtgRqyTn3ynZNFstuw5BsaIzhBMhkvolVVtVi9ciz9GH6TEG
-		// $2b$10$MZMcXfWk8c1ODm.wXop.GOVxLsm9uOJlq8wums.Y7X2jmVt0VgAJ.
-
 		const user = await db.query.users.findFirst({
 			where: eq(users.email, email),
 		});
 
-		console.log(user);
+		const passwordMatches = await bcrypt.compare(password, user?.password as string);
 
-		if (!user) {
+		if (!user || !passwordMatches) {
 			return {
 				message: "Something went wrong with authenticating users",
 			};
 		}
-		if (user) {
+		if (user && passwordMatches) {
 			createSession(user.id);
 			redirect("/");
 		}
+	}
+}
+
+export async function getUser(userId: number) {
+	try {
+		const [userData] = await db
+			.select({
+				id: users.id,
+				name: users.name,
+				email: users.email,
+			})
+			.from(users)
+			.where(eq(users.id, userId));
+
+		return userData;
+	} catch (err) {
+		console.log(err, "Failed to fetch user data");
+		return null;
 	}
 }
