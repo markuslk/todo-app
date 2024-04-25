@@ -12,7 +12,7 @@ import { createSession, deleteSession } from "@/lib/session";
 export const getAllUsersTasks = async (userId: number) => {
 	const data = await db.query.tasks.findMany({
 		where: eq(tasks.userId, userId),
-		orderBy: [desc(tasks.id)],
+		orderBy: tasks.isChecked,
 	});
 	return data;
 };
