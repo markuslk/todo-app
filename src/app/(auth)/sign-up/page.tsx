@@ -56,7 +56,7 @@ const SignUpPage = async () => {
 								href={"/sign-in"}
 								className={buttonVariants({
 									variant: "link",
-									className: "gap-1.5 text-white",
+									className: "gap-1.5 text-gray-500 dark:text-white",
 								})}>
 								Already have an account? Sign-in
 							</Link>
