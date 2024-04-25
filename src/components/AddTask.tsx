@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createTask } from "@/db/queries";
+import { LoaderCircle } from "lucide-react";
 import { ChangeEvent, KeyboardEvent, useState, useTransition } from "react";
 
 const AddTask = ({ userId }: { userId: number }) => {
@@ -13,10 +14,12 @@ const AddTask = ({ userId }: { userId: number }) => {
 	};
 
 	const handleAdd = () => {
-		startTransition(async () => {
-			await createTask(value, userId);
-			setValue("");
-		});
+		if (value.length >= 3) {
+			startTransition(async () => {
+				await createTask(value, userId);
+				setValue("");
+			});
+		}
 	};
 
 	const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -36,7 +39,14 @@ const AddTask = ({ userId }: { userId: number }) => {
 				type="submit"
 				onClick={handleAdd}
 				disabled={isPending}>
-				Add Todo
+				{isPending ? (
+					<>
+						<LoaderCircle className="animate-spin h-5 w-5 mr-1" />
+						Adding Task
+					</>
+				) : (
+					"Add Task"
+				)}
 			</Button>
 		</div>
 	);
