@@ -16,10 +16,10 @@ const CompleteTask = ({ taskId, isChecked }: { taskId: number; isChecked: boolea
 	return (
 		<Button
 			variant={isChecked ? "outline" : "default"}
-			size={"icon"}
+			className="h-8 w-8 p-0"
 			onClick={handleComplete}
 			disabled={isPending}>
-			{isChecked ? <Undo2 /> : <Check />}
+			{isChecked ? <Undo2 className="h-5 w-5" /> : <Check className="h-5 w-5" />}
 		</Button>
 	);
 };

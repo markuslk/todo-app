@@ -16,10 +16,10 @@ const DeleteTask = ({ taskId }: { taskId: number }) => {
 	return (
 		<Button
 			variant={"destructive"}
-			size={"icon"}
 			onClick={handleDelete}
+			className="h-8 w-8 p-0"
 			disabled={isPending}>
-			<Trash2 className="w-5 h-5" />
+			<Trash2 className="h-5 w-5" />
 		</Button>
 	);
 };

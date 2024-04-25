@@ -27,7 +27,7 @@ const TaskList = ({ tasks }: TaskListProps) => {
 			variants={container}
 			initial="hidden"
 			animate="show"
-			className="space-y-4">
+			className="space-y-2">
 			<AnimatePresence>
 				{tasks.map((task: TaskProps) => (
 					<Task

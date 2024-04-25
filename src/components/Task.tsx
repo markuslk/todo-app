@@ -22,12 +22,12 @@ const Task = ({ id, name, isChecked }: TaskProps) => {
 				variants={item}
 				key={id}
 				transition={{ duration: 0.75 }}
-				className={cn("flex place-content-between items-center border p-4 rounded-xl border-primary dark:bg-black bg-gray-200", {
+				className={cn("flex place-content-between items-center align-middle border-b p-2 border-gray-200/40", {
 					"bg-opacity-20 dark:bg-opacity-20": isChecked,
 				})}>
 				<h3
-					className={cn("font-semibold dark:text-white text-gray-900", {
-						"line-through": isChecked,
+					className={cn("dark:text-white text-gray-900", {
+						"line-through text-red-500 dark:text-red-500": isChecked,
 					})}>
 					{name}
 				</h3>
