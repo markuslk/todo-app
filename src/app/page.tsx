@@ -1,6 +1,5 @@
 import { getAllUsersTasks, logout } from "@/db/queries";
 import AddTask from "../components/AddTask";
-import ChangeTheme from "../components/ChangeTheme";
 import TaskList from "@/components/TaskList";
 import { getSession } from "@/lib/session";
 import { Button } from "@/components/ui/button";
@@ -16,9 +15,6 @@ export default async function Home() {
 
 		return (
 			<main className="max-w-7xl mx-auto relative py-10 lg:py-20 px-4 lg:px-8">
-				<div className="flex place-content-end">
-					<ChangeTheme />
-				</div>
 				<div className="flex flex-col items-center">
 					<h1 className="text-5xl font-bold text-center mb-8">Todo App</h1>
 					<h3 className="mb-8">Welcome, {currentUser.name}</h3>

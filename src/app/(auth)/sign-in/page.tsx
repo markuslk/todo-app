@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const SignInPage = async () => {
 	return (
-		<div className="max-w-7xl mx-auto relative py-10 lg:py-20 px-4 lg:px-8 h-screen flex flex-col justify-center">
+		<div className="max-w-7xl mx-auto relative py-10 lg:py-20 px-4 lg:px-8 flex flex-col justify-center">
 			<div className="flex items-center flex-col justify-center">
 				<Card className="w-full max-w-sm lg:max-w-md">
 					<CardHeader>
